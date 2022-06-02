@@ -70,14 +70,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     _openSound = Provider.of<TextStyleState>(context).openSound;
-    ScreenUtil.init(
-        BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height),
-        designSize: const Size(406, 879),
-        context: context,
-        minTextAdapt: true,
-        orientation: Orientation.portrait);
+    // ScreenUtil.init(
+    //     BoxConstraints(
+    //         maxWidth: MediaQuery.of(context).size.width,
+    //         maxHeight: MediaQuery.of(context).size.height),
+    //     designSize: Size(406, 879),
+    //     context: context,
+    //     minTextAdapt: true,
+    //     orientation: Orientation.portrait);
+    ScreenUtil.init(context,
+      designSize: Size(406, 879),
+    );
 
 
     return  Scaffold(

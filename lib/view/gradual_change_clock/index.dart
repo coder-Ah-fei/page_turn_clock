@@ -1,6 +1,7 @@
 import 'dart:math';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// 渐变时钟
 class GradualChangeClock extends StatefulWidget {
@@ -31,7 +32,6 @@ class _GradualChangeClockState extends State<GradualChangeClock>
   void didUpdateWidget(covariant GradualChangeClock oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
-    print('${widget.second}');
     if (oldWidget.minute != widget.minute) {
       print('${widget.minute}');
       // _controller.forward();
@@ -42,8 +42,8 @@ class _GradualChangeClockState extends State<GradualChangeClock>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller =
-        AnimationController(duration: const Duration(seconds: 60,milliseconds: 0), vsync: this);
+    _controller = AnimationController(
+        duration: const Duration(seconds: 60, milliseconds: 0), vsync: this);
     _curve = CurvedAnimation(parent: _controller, curve: Curves.linear);
     _controller.addListener(() {});
     setState(() {
@@ -56,7 +56,6 @@ class _GradualChangeClockState extends State<GradualChangeClock>
   void dispose() {
     // TODO: implement dispose
     _controller.dispose();
-    print('_controller.dispose()');
     super.dispose();
   }
 
@@ -70,7 +69,6 @@ class _GradualChangeClockState extends State<GradualChangeClock>
                 alignment: Alignment.center,
                 transform: Matrix4.identity()..rotateZ((1.5 + a / 30) * pi),
                 child: Container(
-                    // color: Color.fromARGB(255, 120, 82, 251),
                     width: double.infinity,
                     height: double.infinity,
                     child: RotationTransition(
@@ -80,26 +78,42 @@ class _GradualChangeClockState extends State<GradualChangeClock>
                           painter: MyCustomPainter(),
                         ),
                       ),
-                    ))
-                // child: Transform(
-                //   alignment: Alignment.center,
-                //   transform: Matrix4.identity()..rotateZ(pi * i),
-                //   child: Center(
-                //     child: CustomPaint(
-                //       painter: MyCustomPainter(),
-                //     ),
-                //   ),
-                // )),
-                )),
+                    )))),
         Text(
-          "${widget.hour}:${widget.minute}",
+          "${widget.hour < 10 ? '0' : ''}${widget.hour}:${widget.minute < 10 ? '0' : ''}${widget.minute}:${widget.second < 10 ? '0' : ''}${widget.second}",
           style: TextStyle(
-            fontSize: 70.w,
+            fontSize: (1.sw < 1.sh ? 30.w : 60.h),
             color: Colors.white,
           ),
         ),
+        ...getArr(),
       ]),
     ));
+  }
+
+  /// 计算每小时的坐标x
+  getx(int a) {
+    return (1.sw < 1.sh ? 120.w : 250.h) * sin(pi * (a / 6));
+  }
+
+  /// 计算每个小时的坐标y
+  gety(int a) {
+    return (1.sw < 1.sh ? 120.w : 250.h) * cos(pi * (a / 6));
+  }
+
+  /// 获取时针数字
+  getArr() {
+    var arr = [];
+    for (int i = 1; i < 13; i++) {
+      arr.add(Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()..translate(getx(i), -gety(i)),
+          child: Text(
+            '$i',
+            style: TextStyle(fontSize: (1.sw < 1.sh ? 30.w : 60.h), color: Colors.white),
+          )));
+    }
+    return arr;
   }
 }
 

@@ -82,7 +82,7 @@ class _GradualChangeClockState extends State<GradualChangeClock>
         Text(
           "${widget.hour < 10 ? '0' : ''}${widget.hour}:${widget.minute < 10 ? '0' : ''}${widget.minute}:${widget.second < 10 ? '0' : ''}${widget.second}",
           style: TextStyle(
-            fontSize: (1.sw < 1.sh ? 30.w : 60.h),
+            fontSize: (1.sw < 1.sh ? 30.w : 80.h),
             color: Colors.white,
           ),
         ),
@@ -124,18 +124,21 @@ class MyCustomPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.drawPath(
         Path()
-          ..moveTo(-1000.0, -1000.0)
-          ..lineTo(1000, -1000.0)
-          ..lineTo(1000, 1000)
-          ..lineTo(-1000.0, 1000)
+          ..moveTo(-2000.0, -2000.0)
+          ..lineTo(2000, -2000.0)
+          ..lineTo(2000, 2000)
+          ..lineTo(-2000.0, 2000)
           ..close(),
         Paint()
           ..strokeWidth = 3.0
           ..style = PaintingStyle.stroke
           ..style = PaintingStyle.fill
           ..shader = const SweepGradient(colors: [
-            Color.fromARGB(255, 238, 116, 225),
-            Color.fromARGB(255, 62, 236, 172)
+            Color.fromARGB(255, 36, 207, 197),
+            Color.fromARGB(255, 0, 28, 99)
+            // Color.fromARGB(255, 238, 116, 225),
+            // Color.fromARGB(255, 62, 236, 172)
+            //background: linear-gradient(220.55deg, #24CFC5 0%, #001C63 100%);
             // Color.fromARGB(255, 120, 82, 251),
             // Color.fromARGB(255, 68, 1, 143)
           ]).createShader(Rect.fromCircle(center: Offset(0, 0), radius: 1000)));

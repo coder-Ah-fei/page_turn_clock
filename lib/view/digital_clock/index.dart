@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_turn_clock/provider/text_style_state.dart';
 import 'package:provider/provider.dart';
-
+import 'package:screen_brightness/screen_brightness.dart';
 /// 数字时钟
 class DigitalClock extends StatefulWidget {
   final int hour, minute, second;
@@ -19,7 +19,7 @@ class DigitalClock extends StatefulWidget {
 }
 
 class _DigitalClockState extends State<DigitalClock> {
-
+  double _sliderItemA = 0.0;
 
   /// 手机系统自动横屏，电脑系统这是最小窗口
   Future testWindowFunctions() async {
@@ -48,6 +48,23 @@ class _DigitalClockState extends State<DigitalClock> {
     super.dispose();
 
   }
+  Future<double> get systemBrightness async {
+    try {
+      return await ScreenBrightness().system;
+    } catch (e) {
+      print(e);
+      throw 'Failed to get system brightness';
+    }
+  }
+
+  Future<void> setBrightness(double brightness) async {
+    try {
+      await ScreenBrightness().setScreenBrightness(brightness);
+    } catch (e) {
+      print(e);
+      throw 'Failed to set brightness';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +83,23 @@ class _DigitalClockState extends State<DigitalClock> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Text("$_sliderItemA", style: TextStyle(color: Colors.white),),
+          // Slider(
+          //   value: _sliderItemA,
+          //   onChanged: (value) async {
+          //     setState(() {
+          //       _sliderItemA = value;
+          //     });
+          //     setBrightness(value/100);
+          //     print('${await systemBrightness}');
+          //   },
+          //   activeColor: Theme.of(context).accentColor,
+          //   inactiveColor: Theme.of(context).accentColor.withOpacity(0.3),
+          //   min: 0.0,
+          //   max: 100.0,
+          //   divisions: 100,
+          //   label: '${_sliderItemA.toInt()}',
+          // ),
           _showDateText
               ? Container(
             padding: EdgeInsets.only(left: 50),

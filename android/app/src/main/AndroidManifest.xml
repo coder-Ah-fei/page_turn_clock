@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.page_turn_clock">
+    package="com.coderahfei.page_turn_clock">
    <application
-        android:label="page_turn_clock"
+        android:label="全屏时钟"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:name=".MainActivity"
+            android:name="com.coderahfei.page_turn_clock.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
